@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Clientes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Cadastro de Clientes</h1>
+    <p class="subtitulo">Projeto simples para demonstração de CI/CD.</p>
+
+    <form id="cadastro-form">
+      <label>Nome
+        <input id="nome" name="nome" type="text" placeholder="Ex.: Maria Silva" required />
+      </label>
+
+      <label>E-mail
+        <input id="email" name="email" type="email" placeholder="maria@email.com" required />
+      </label>
+
+      <label>Telefone
+        <input id="telefone" name="telefone" type="text" placeholder="(42) 99999-9999" required />
+      </label>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="mensagem" aria-live="polite"></p>
+
+    <h2>Clientes cadastrados</h2>
+    <div class="tabela-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Ação</th></tr>
+        </thead>
+        <tbody id="clientes"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="validacoes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
