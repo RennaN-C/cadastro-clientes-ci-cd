@@ -2,9 +2,13 @@ name: CI/CD - Cadastro de Clientes
 
 on:
   push:
-    branches: [main]
+    branches:
+      - desenvolvimento
+      - main
+
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -13,6 +17,7 @@ jobs:
   testes:
     name: Testes unitários
     runs-on: ubuntu-latest
+
     steps:
       - name: Baixar o código do repositório
         uses: actions/checkout@v6
@@ -27,9 +32,10 @@ jobs:
 
   build-deploy:
     name: Build, publicação e deploy na AWS
-    if: github.event_name == 'push'
     needs: testes
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+
     steps:
       - name: Baixar o código do repositório
         uses: actions/checkout@v6
@@ -70,4 +76,8 @@ jobs:
           ssh -i ~/.ssh/ec2_key "ec2-user@$EC2_HOST" \
             "sudo docker pull '$IMAGE' && \
              (sudo docker rm -f cadastro-clientes || true) && \
-             sudo docker run -d --name cadastro-clientes --restart unless-stopped -p 80:80 '$IMAGE'"
+             sudo docker run -d \
+               --name cadastro-clientes \
+               --restart unless-stopped \
+               -p 80:80 \
+               '$IMAGE'"
